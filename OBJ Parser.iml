@@ -20,5 +20,16 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: net.java.jinput:jinput-platform:natives-linux:2.0.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: net.java.jinput:jinput-platform:natives-windows:2.0.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: net.java.jinput:jinput-platform:natives-osx:2.0.5" level="project" />
+    <orderEntry type="library" name="Maven: org.slick2d:slick2d-core:1.0.1" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: javax.jnlp:jnlp-api:5.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Tools/Java/jdk1.8.0_74/jre/lib/javaws.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Maven: org.jcraft:jorbis:0.0.17" level="project" />
   </component>
 </module>
