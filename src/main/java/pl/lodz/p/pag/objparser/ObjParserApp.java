@@ -1,10 +1,13 @@
 package pl.lodz.p.pag.objparser;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector3f;
+import pl.lodz.p.pag.objparser.Entities.Camera;
+import pl.lodz.p.pag.objparser.Entities.Entity;
+import pl.lodz.p.pag.objparser.models.RawModel;
 import pl.lodz.p.pag.objparser.models.TextureModel;
 import pl.lodz.p.pag.objparser.renderengine.DisplayManager;
 import pl.lodz.p.pag.objparser.renderengine.Loader;
-import pl.lodz.p.pag.objparser.models.RawModel;
 import pl.lodz.p.pag.objparser.renderengine.Renderer;
 import pl.lodz.p.pag.objparser.shaders.StaticShader;
 import pl.lodz.p.pag.objparser.textures.ModelTexture;
@@ -17,9 +20,9 @@ public class ObjParserApp {
         DisplayManager.createDisplay();
 
         Loader loader = new Loader();
-        Renderer renderer = new Renderer();
 
         StaticShader staticShader = new StaticShader();
+        Renderer renderer = new Renderer(staticShader);
 
         float[] vertices = {
                 -0.5f, 0.5f, 0f,
@@ -44,11 +47,18 @@ public class ObjParserApp {
         ModelTexture texture = new ModelTexture(loader.loadTexture("texture"));
         TextureModel textureModel = new TextureModel(rawModel, texture);
 
+        Entity entity = new Entity(textureModel, new Vector3f(0.0f, 0.0f, -1.0f), 0, 0, 0, 1);
+
+        Camera camera = new Camera();
+
         while (!Display.isCloseRequested()) {
+            entity.increaseRotation(0, 1, 0);
+            //entity.increasePosition(0.001f,0,-0.05f);
+            camera.move();
             renderer.prepare();
             staticShader.start();
-//            renderer.render(rawModel);
-            renderer.render(textureModel);
+            staticShader.loadViewMatrix(camera);
+            renderer.render(entity, staticShader);
             staticShader.stop();
             DisplayManager.updateDisplay();
         }

@@ -29,12 +29,12 @@ public class DisplayManager {
         GL11.glViewport(0, 0, WIDTH, HEIGHT);
     }
 
-    public static void updateDisplay(){
+    public static void updateDisplay() {
         Display.sync(FPS_CAP);
         Display.update();
     }
 
-    public static void closeDisplay(){
+    public static void closeDisplay() {
         Display.destroy();
     }
 
