@@ -1,13 +1,16 @@
 package pl.lodz.p.pag.objparser.Entities;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 
 /**
  * Created by piotr on 16.04.2016.
  */
 public class Camera {
-    private Vector3f position = new Vector3f(0,0,0);
+    public static final float CAMERA_STEP = 0.1f;
+
+    private Vector3f position = new Vector3f(0, 0, 0);
     private float pitch;
     private float yaw;
     private float roll;
@@ -15,21 +18,26 @@ public class Camera {
     public Camera() {
     }
 
-    public void move(){
-        if(Keyboard.isKeyDown(Keyboard.KEY_W)){
-            position.z-=0.02f;
+    public void move() {
+        if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+            position.z -= CAMERA_STEP;
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_D)){
-            position.x+=0.02f;
+        if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
+            position.x += CAMERA_STEP;
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_A)){
-            position.x-=0.02f;
+        if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+            position.x -= CAMERA_STEP;
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_S)){
-            position.z+=0.02f;
+        if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
+            position.z += CAMERA_STEP;
         }
-
-}
+        if (Keyboard.isKeyDown(Keyboard.KEY_Q)) {
+            position.y += CAMERA_STEP;
+        }
+        if(Keyboard.isKeyDown(Keyboard.KEY_E)){
+            position.y -= CAMERA_STEP;
+        }
+    }
 
     public Vector3f getPosition() {
         return position;
