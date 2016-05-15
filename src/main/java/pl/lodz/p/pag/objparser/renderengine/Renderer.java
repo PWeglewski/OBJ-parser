@@ -2,7 +2,7 @@ package pl.lodz.p.pag.objparser.renderengine;
 
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.vector.Matrix4f;
-import pl.lodz.p.pag.objparser.Entities.Entity;
+import pl.lodz.p.pag.objparser.entities.Entity;
 import pl.lodz.p.pag.objparser.models.RawModel;
 import pl.lodz.p.pag.objparser.models.TextureModel;
 import pl.lodz.p.pag.objparser.shaders.StaticShader;

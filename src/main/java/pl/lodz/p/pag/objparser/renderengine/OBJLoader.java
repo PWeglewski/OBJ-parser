@@ -2,12 +2,14 @@ package pl.lodz.p.pag.objparser.renderengine;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import pl.lodz.p.pag.objparser.materials.MaterialLibraryLoader;
 import pl.lodz.p.pag.objparser.models.RawModel;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -16,22 +18,22 @@ import java.util.stream.Collectors;
 public class OBJLoader {
     public static final String OBJ_PATH = "src/main/resources/";
 
+    private static List<Integer> indices = new ArrayList<>();
+    private static List<Vector3f> vertices = new ArrayList<>();
+
     public static RawModel readFromObjFile(String fileName, Loader loader) {
 
         float[] verticesArray = null;
         float[] normalsArray = null;
         float[] textureArray = null;
         int[] indicesArray = null;
-        List<Integer> indices = new ArrayList<>();
-        List<Vector3f> vertices = new ArrayList<>();
 
-//        try (BufferedReader bufferedReader = new BufferedReader(
-//                new FileReader(
-//                        new File(OBJ_PATH + fileName + ".obj")))) {
         try (BufferedReader bufferedReader = new BufferedReader(
                 new FileReader(
                         new File(fileName)))) {
             List<String> lines = bufferedReader.lines().collect(Collectors.toList());
+
+            bufferedReader.lines().forEach(OBJLoader::readLine);
 
             List<Vector3f> verticesTemp = new ArrayList<>();
             lines.stream()
@@ -71,6 +73,25 @@ public class OBJLoader {
                         Arrays.stream(objects).forEach(o -> list.add(Arrays.stream((String[]) o).mapToInt(Integer::parseInt).boxed().toArray(Integer[]::new)));
                         vertexesInfoList.add(list);
                     });
+
+
+            Optional<String> mtllibLine = lines.stream()
+                    .filter(e -> e.startsWith("mtllib "))
+                    .findFirst();
+
+            mtllibLine.ifPresent(s -> {
+                String[] splitted = s.split(" ");
+                if (splitted.length > 1) {
+                    System.out.println(splitted[1]);
+                    MaterialLibraryLoader materialLibraryLoader = new MaterialLibraryLoader();
+//                    materialLibraryLoader.readForMtlFile("\\Pikachu\\"+splitted[1]);
+                    File[] files = new File("\\").listFiles();
+                    for (File file : files) {
+                        System.out.println(file.getPath());
+                    }
+                }
+            });
+
 
             textureArray = new float[vertices.size() * 2];
             normalsArray = new float[vertices.size() * 3];
@@ -243,5 +264,9 @@ public class OBJLoader {
         normalsArray[currentVertexPointer * 3] = currentNorm.x;
         normalsArray[currentVertexPointer * 3 + 1] = currentNorm.y;
         normalsArray[currentVertexPointer * 3 + 2] = currentNorm.z;
+    }
+
+    private static void readLine(String line) {
+
     }
 }

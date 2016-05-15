@@ -1,8 +1,8 @@
 package pl.lodz.p.pag.objparser.shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
-import pl.lodz.p.pag.objparser.Entities.Camera;
-import pl.lodz.p.pag.objparser.Entities.Light;
+import pl.lodz.p.pag.objparser.entities.Camera;
+import pl.lodz.p.pag.objparser.entities.Light;
 import pl.lodz.p.pag.objparser.toolbox.Maths;
 
 /**

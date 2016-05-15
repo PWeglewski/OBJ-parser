@@ -1,4 +1,4 @@
-package pl.lodz.p.pag.objparser.Entities;
+package pl.lodz.p.pag.objparser.entities;
 
 import org.lwjgl.util.vector.Vector3f;
 import pl.lodz.p.pag.objparser.models.TextureModel;

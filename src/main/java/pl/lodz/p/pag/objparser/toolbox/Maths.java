@@ -2,7 +2,7 @@ package pl.lodz.p.pag.objparser.toolbox;
 
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
-import pl.lodz.p.pag.objparser.Entities.Camera;
+import pl.lodz.p.pag.objparser.entities.Camera;
 
 /**
  * Created by piotr on 16.04.2016.
