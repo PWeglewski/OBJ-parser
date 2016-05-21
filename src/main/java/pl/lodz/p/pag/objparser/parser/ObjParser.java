@@ -3,10 +3,6 @@ package pl.lodz.p.pag.objparser.parser;
 import pl.lodz.p.pag.objparser.file.FileUtility;
 import pl.lodz.p.pag.objparser.models.Model;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

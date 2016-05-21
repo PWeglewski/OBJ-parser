@@ -42,7 +42,6 @@ public class MaterialLibraryParser {
                     } while ((line = bufferedReader.readLine()) != null);
                 }
             }
-            System.out.println("Janusz");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

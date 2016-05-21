@@ -40,7 +40,7 @@ public class ObjFile {
         this.fileName = fileName;
     }
 
-    private void dividePath(File file){
+    private void dividePath(File file) {
         contextRoot = file.getParent();
         fileName = file.getName();
     }

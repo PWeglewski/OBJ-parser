@@ -1,8 +1,5 @@
 package pl.lodz.p.pag.objparser.materials;
 
-import java.io.*;
-import java.util.Arrays;
-
 /**
  * Created by piotr on 06.05.2016.
  */
