@@ -47,7 +47,6 @@ public class MaterialLibraryParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(materialLibraryLine);
         return materialLibrary;
     }
 }

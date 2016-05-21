@@ -10,18 +10,22 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by piotr on 14.05.2016.
  */
 public class ObjParserUtility {
-    public static final String MATERIAL_LIBRARY = "mtllib";
+    public static final String MATERIAL_LIBRARY = "mtllib ";
     public static final String VERTEX = "v ";
     public static final String TEXTURE_COORDINATES = "vt ";
     public static final String NORMAL = "vn ";
     public static final String GROUP = "g ";
     public static final String FACE = "f ";
     public static final String USE_MATERIAL = "usemtl ";
+    public static final String SMOOTH_SHADING = "s ";
 
     public static Model parseModel(ObjFile objFile) {
         Model model = new Model();
@@ -42,7 +46,15 @@ public class ObjParserUtility {
                             group.setMaterial(model.getMaterialLibrary().getMaterialList().get(splittedLine[1]));
                         }
                         else if(line.startsWith(FACE)){
-                            String[] splittedLine = line.split(" ");
+                            String[] faces = getFaces(line);
+                            List<int[]> indicesList = new ArrayList<>();
+                            for (String vertex : faces){
+                                indicesList.add(getIndices(vertex));
+                            }
+                            group.getFaces().add(indicesList);
+                        }
+                        else if(line.startsWith(SMOOTH_SHADING)){
+                            // not implemented yet
                         }
                         else{
                             break;
@@ -81,7 +93,6 @@ public class ObjParserUtility {
                     );
                 }
             }
-            System.out.println("janusz");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -89,5 +100,19 @@ public class ObjParserUtility {
         }
 
         return model;
+    }
+
+    private static String[] getFaces(String line){
+        String[] splittedLine = line.split(" ");
+        String[] faces = Arrays.copyOfRange(splittedLine, 1, splittedLine.length);
+        return faces;
+    }
+
+    private static int[] getIndices(String vertex){
+        String[] stringIndices = vertex.split("/");
+        int[] integerIndices = Arrays.stream(stringIndices)
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        return integerIndices;
     }
 }
