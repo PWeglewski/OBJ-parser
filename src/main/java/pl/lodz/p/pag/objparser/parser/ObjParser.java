@@ -15,7 +15,6 @@ public class ObjParser {
     public ObjParser(FileUtility fileUtility) {
         fileUtility.getObjFiles().stream()
                 .forEach(objFile -> addNewModel(ObjParserUtility.parseModel(objFile)));
-        System.out.println("finito");
     }
 
     private void addNewModel(Model model) {

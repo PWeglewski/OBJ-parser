@@ -18,11 +18,17 @@ public class Scene {
     List<Light> lights = new ArrayList<>();
 
     public Scene(ObjParser objParser) {
-        float location = 0.0f;
-        for(Model model : objParser.getModels()){
-            entities.add(new Entity(model, new Vector3f(location, 0.0f, -1.0f), 0, 0, 0, 1));
-            lights.add(new Light(new Vector3f(0,4, 5), new Vector3f(1,1,1)));
-            location+=5.0f;
+        float location = 5.0f;
+        Entity previous = null;
+        Entity currentEntity = null;
+        for (Model model : objParser.getModels()) {
+            currentEntity = new Entity(model, new Vector3f(location, 0.0f, -1.0f), 0, 0, 0, 1);
+            if (previous != null) {
+                currentEntity.setParent(previous);
+            }
+            entities.add(currentEntity);
+            previous = currentEntity;
+            lights.add(new Light(new Vector3f(0, 4, 5), new Vector3f(1, 1, 1)));
         }
     }
 
@@ -34,7 +40,7 @@ public class Scene {
         this.entities = entities;
     }
 
-    public void loadLights(StaticShader staticShader){
+    public void loadLights(StaticShader staticShader) {
         lights.forEach(staticShader::loadLight);
     }
 }

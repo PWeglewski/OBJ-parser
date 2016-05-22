@@ -52,7 +52,7 @@ public class StaticShader extends ShaderProgram {
         super.loadMatrix(location_viewMatrix, viewMatrix);
     }
 
-    public void loadLight(Light light){
+    public void loadLight(Light light) {
         super.loadVector(location_lightPosition, light.getPosition());
         super.loadVector(location_lightColour, light.getColour());
     }

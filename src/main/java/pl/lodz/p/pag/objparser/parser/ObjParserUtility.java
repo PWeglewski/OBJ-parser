@@ -44,19 +44,16 @@ public class ObjParserUtility {
                         if (line.startsWith(USE_MATERIAL)) {
                             String[] splittedLine = line.split(" ");
                             group.setMaterial(model.getMaterialLibrary().getMaterialList().get(splittedLine[1]));
-                        }
-                        else if(line.startsWith(FACE)){
+                        } else if (line.startsWith(FACE)) {
                             String[] faces = getFaces(line);
                             List<int[]> indicesList = new ArrayList<>();
-                            for (String vertex : faces){
+                            for (String vertex : faces) {
                                 indicesList.add(getIndices(vertex));
                             }
                             group.getFaces().add(indicesList);
-                        }
-                        else if(line.startsWith(SMOOTH_SHADING)){
+                        } else if (line.startsWith(SMOOTH_SHADING)) {
                             // not implemented yet
-                        }
-                        else{
+                        } else {
                             break;
                         }
                     }
@@ -102,13 +99,13 @@ public class ObjParserUtility {
         return model;
     }
 
-    private static String[] getFaces(String line){
+    private static String[] getFaces(String line) {
         String[] splittedLine = line.split(" ");
         String[] faces = Arrays.copyOfRange(splittedLine, 1, splittedLine.length);
         return faces;
     }
 
-    private static int[] getIndices(String vertex){
+    private static int[] getIndices(String vertex) {
         String[] stringIndices = vertex.split("/");
         int[] integerIndices = Arrays.stream(stringIndices)
                 .mapToInt(Integer::parseInt)

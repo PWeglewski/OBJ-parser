@@ -1,5 +1,6 @@
 package pl.lodz.p.pag.objparser.entities;
 
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import pl.lodz.p.pag.objparser.models.Model;
 
@@ -7,6 +8,8 @@ import pl.lodz.p.pag.objparser.models.Model;
  * Created by piotr on 16.04.2016.
  */
 public class Entity {
+    Matrix4f transformationMatrix;
+    private Entity parent;
     private Model model;
     private Vector3f position;
     private float rotX, rotY, rotZ;
@@ -19,6 +22,22 @@ public class Entity {
         this.rotY = rotY;
         this.rotZ = rotZ;
         this.scale = scale;
+    }
+
+    public Matrix4f getTransformationMatrix() {
+        return transformationMatrix;
+    }
+
+    public void setTransformationMatrix(Matrix4f transformationMatrix) {
+        this.transformationMatrix = transformationMatrix;
+    }
+
+    public Entity getParent() {
+        return parent;
+    }
+
+    public void setParent(Entity parent) {
+        this.parent = parent;
     }
 
     public void increasePosition(float dx, float dy, float dz) {
