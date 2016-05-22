@@ -41,7 +41,6 @@ public class ObjParserApp {
 //        TextureModel textureModel = new TextureModel(rawModel, texture);
 //
         Scene scene = new Scene(objParser);
-        Light light = new Light(new Vector3f(0,4, 5), new Vector3f(1,1,1));
 //
         Camera camera = new Camera();
 //
@@ -51,7 +50,7 @@ public class ObjParserApp {
             camera.move();
             renderer.prepare();
             staticShader.start();
-            staticShader.loadLight(light);
+            scene.loadLights(staticShader);
             staticShader.loadViewMatrix(camera);
             renderer.render(scene, staticShader);
             staticShader.stop();
