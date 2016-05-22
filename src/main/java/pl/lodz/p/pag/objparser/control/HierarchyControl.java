@@ -20,6 +20,42 @@ public class HierarchyControl {
     }
 
     public void update() {
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD4)) {
+            selection.increaseRotation(0, 0.4f, 0);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD6)) {
+            selection.increaseRotation(0, -0.4f, 0);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD8)) {
+            selection.increaseRotation(0.4f, 0, 0);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD2)) {
+            selection.increaseRotation(-0.4f, 0, 0);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD1)) {
+            selection.increaseRotation(0, 0, 0.4f);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD3)) {
+            selection.increaseRotation(0, 0, -0.4f);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD7)) {
+            selection.setScale(selection.getScale() * 1.02f);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_NUMPAD9)) {
+            selection.setScale(selection.getScale() / 1.02f);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_T)) {
+            selection.increasePosition(0,0,0.1f);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_G)) {
+            selection.increasePosition(0,0,-0.1f);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_F)) {
+            selection.increasePosition(-0.1f,0,0);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_H)) {
+            selection.increasePosition(0.1f,0,0);
+        }
         while (Keyboard.next()) {
             if (Keyboard.getEventKeyState()) {
                 if (Keyboard.getEventKey() == Keyboard.KEY_LEFT) {
@@ -57,7 +93,7 @@ public class HierarchyControl {
         System.out.println("Current selection:\t" + name);
     }
 
-    private void deselect(){
+    private void deselect() {
         selection.setSelected(false);
     }
 }
