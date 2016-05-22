@@ -1,18 +1,18 @@
 package pl.lodz.p.pag.objparser.entities;
 
 import org.lwjgl.util.vector.Vector3f;
-import pl.lodz.p.pag.objparser.models.TextureModel;
+import pl.lodz.p.pag.objparser.models.Model;
 
 /**
  * Created by piotr on 16.04.2016.
  */
 public class Entity {
-    private TextureModel model;
+    private Model model;
     private Vector3f position;
     private float rotX, rotY, rotZ;
     private float scale;
 
-    public Entity(TextureModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
+    public Entity(Model model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
         this.model = model;
         this.position = position;
         this.rotX = rotX;
@@ -41,11 +41,11 @@ public class Entity {
         this.position = position;
     }
 
-    public TextureModel getModel() {
+    public Model getModel() {
         return model;
     }
 
-    public void setModel(TextureModel model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 

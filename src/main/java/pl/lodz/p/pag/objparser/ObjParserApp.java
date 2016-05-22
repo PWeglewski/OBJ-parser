@@ -1,8 +1,19 @@
 package pl.lodz.p.pag.objparser;
 
+import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector3f;
+import pl.lodz.p.pag.objparser.entities.Camera;
+import pl.lodz.p.pag.objparser.entities.Entity;
+import pl.lodz.p.pag.objparser.entities.Light;
 import pl.lodz.p.pag.objparser.file.FileUtility;
+import pl.lodz.p.pag.objparser.models.Model;
 import pl.lodz.p.pag.objparser.parser.ObjParser;
 import pl.lodz.p.pag.objparser.renderengine.DisplayManager;
+import pl.lodz.p.pag.objparser.renderengine.Loader;
+import pl.lodz.p.pag.objparser.renderengine.OBJLoader;
+import pl.lodz.p.pag.objparser.renderengine.Renderer;
+import pl.lodz.p.pag.objparser.scene.Scene;
+import pl.lodz.p.pag.objparser.shaders.StaticShader;
 
 /**
  * Created by piotr on 16.04.2016.
@@ -15,35 +26,39 @@ public class ObjParserApp {
 
         ObjParser objParser = new ObjParser(fileUtility);
 
+        OBJLoader objLoader = new OBJLoader();
+        Loader loader = new Loader();
+        objLoader.loadObj(objParser, loader);
+
 //        Loader loader = new Loader();
 //
-//        StaticShader staticShader = new StaticShader();
-//        Renderer renderer = new Renderer(staticShader);
+        StaticShader staticShader = new StaticShader();
+        Renderer renderer = new Renderer(staticShader);
 //
 //        RawModel rawModel = OBJLoader.readFromObjFile(args[0], loader);
 //
 //        ModelTexture texture = new ModelTexture(loader.loadTexture(args[1]));
 //        TextureModel textureModel = new TextureModel(rawModel, texture);
 //
-//        Entity entity = new Entity(textureModel, new Vector3f(0.0f, 0.0f, -1.0f), 0, 0, 0, 1);
-//        Light light = new Light(new Vector3f(0,4, 5), new Vector3f(1,1,1));
+        Scene scene = new Scene(objParser);
+        Light light = new Light(new Vector3f(0,4, 5), new Vector3f(1,1,1));
 //
-//        Camera camera = new Camera();
+        Camera camera = new Camera();
 //
-//        while (!Display.isCloseRequested()) {
+        while (!Display.isCloseRequested()) {
 //            entity.increaseRotation(0,1,0);
-//            camera.move();
-//            renderer.prepare();
-//            staticShader.start();
-//            staticShader.loadLight(light);
-//            staticShader.loadViewMatrix(camera);
-//            renderer.render(entity, staticShader);
-//            staticShader.stop();
-//            DisplayManager.updateDisplay();
-//        }
+            camera.move();
+            renderer.prepare();
+            staticShader.start();
+            staticShader.loadLight(light);
+            staticShader.loadViewMatrix(camera);
+            renderer.render(scene, staticShader);
+            staticShader.stop();
+            DisplayManager.updateDisplay();
+        }
 //
-//        loader.cleanUp();
-//        staticShader.cleanUp();
-//        DisplayManager.closeDisplay();
+        loader.cleanUp();
+        staticShader.cleanUp();
+        DisplayManager.closeDisplay();
     }
 }

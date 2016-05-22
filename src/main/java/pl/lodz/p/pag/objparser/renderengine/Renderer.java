@@ -3,8 +3,11 @@ package pl.lodz.p.pag.objparser.renderengine;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.vector.Matrix4f;
 import pl.lodz.p.pag.objparser.entities.Entity;
+import pl.lodz.p.pag.objparser.models.Group;
+import pl.lodz.p.pag.objparser.models.Model;
 import pl.lodz.p.pag.objparser.models.RawModel;
 import pl.lodz.p.pag.objparser.models.TextureModel;
+import pl.lodz.p.pag.objparser.scene.Scene;
 import pl.lodz.p.pag.objparser.shaders.StaticShader;
 import pl.lodz.p.pag.objparser.toolbox.Maths;
 
@@ -40,18 +43,25 @@ public class Renderer {
         GL30.glBindVertexArray(0);
     }
 
-    public void render(Entity entity, StaticShader staticShader) {
-        TextureModel textureModel = entity.getModel();
-        RawModel model = textureModel.getRawModel();
-        GL30.glBindVertexArray(model.getVaoId());
+    public void render(Scene scene, StaticShader staticShader) {
+        for (Entity entity : scene.getEntities()){
+            for (Group group:entity.getModel().getGroups()){
+                render(entity, group, staticShader);
+            }
+        }
+    }
+
+    public void render(Entity entity, Group group, StaticShader staticShader) {
+
+        GL30.glBindVertexArray(group.getVaoId());
         GL20.glEnableVertexAttribArray(0);
         GL20.glEnableVertexAttribArray(1);
         GL20.glEnableVertexAttribArray(2);
         Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(), entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
         staticShader.loadTransformationMatrix(transformationMatrix);
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureModel.getModelTexture().getTextureId());
-        GL11.glDrawElements(GL11.GL_TRIANGLES, model.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, group.getMaterial().getTextureVaoId());
+        GL11.glDrawElements(GL11.GL_TRIANGLES, group.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
         GL20.glDisableVertexAttribArray(0);
         GL20.glDisableVertexAttribArray(1);
         GL20.glDisableVertexAttribArray(2);

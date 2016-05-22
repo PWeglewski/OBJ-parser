@@ -34,7 +34,7 @@ public class MaterialLibraryParser {
                         if (line.startsWith(TEXTURE)) {
                             String textureName = line.split(" ")[1];
                             texturePath = file.getParent();
-                            texturePath += texturePath + File.separator + textureName;
+                            texturePath += File.separator + textureName;
                             material = new Material(materialName, texturePath);
                             materialLibrary.getMaterialList().put(materialName, material);
                             break;

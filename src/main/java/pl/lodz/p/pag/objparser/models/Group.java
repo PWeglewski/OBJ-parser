@@ -12,9 +12,27 @@ public class Group {
     String groupName;
     Material material;
     List<List<int[]>> faces = new ArrayList<>();
+    int vaoId;
+    int vertexCount;
 
     public Group(String groupName) {
         this.groupName = groupName;
+    }
+
+    public int getVertexCount() {
+        return vertexCount;
+    }
+
+    public void setVertexCount(int vertexCount) {
+        this.vertexCount = vertexCount;
+    }
+
+    public int getVaoId() {
+        return vaoId;
+    }
+
+    public void setVaoId(int vaoId) {
+        this.vaoId = vaoId;
     }
 
     public String getGroupName() {

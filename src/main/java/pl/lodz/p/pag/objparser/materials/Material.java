@@ -7,10 +7,19 @@ public class Material {
     String materialName;
 
     String textureFileName;
+    int textureVaoId;
 
     public Material(String materialName, String textureFileName) {
         this.materialName = materialName;
         this.textureFileName = textureFileName;
+    }
+
+    public int getTextureVaoId() {
+        return textureVaoId;
+    }
+
+    public void setTextureVaoId(int textureVaoId) {
+        this.textureVaoId = textureVaoId;
     }
 
     public String getMaterialName() {
