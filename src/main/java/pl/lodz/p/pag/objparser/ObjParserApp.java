@@ -46,6 +46,7 @@ public class ObjParserApp {
         Camera camera = new Camera();
 //
         while (!Display.isCloseRequested()) {
+            scene.getEntities().get(0).increaseRotation(0,0.1f,0);
 //            entity.increaseRotation(0,1,0);
             camera.move();
             renderer.prepare();

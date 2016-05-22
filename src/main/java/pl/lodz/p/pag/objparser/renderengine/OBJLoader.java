@@ -2,19 +2,12 @@ package pl.lodz.p.pag.objparser.renderengine;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
-import pl.lodz.p.pag.objparser.materials.Material;
-import pl.lodz.p.pag.objparser.materials.MaterialLibraryLoader;
 import pl.lodz.p.pag.objparser.models.Group;
 import pl.lodz.p.pag.objparser.models.Model;
-import pl.lodz.p.pag.objparser.models.RawModel;
 import pl.lodz.p.pag.objparser.parser.ObjParser;
 
-import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Created by piotr on 16.04.2016.
@@ -276,7 +269,7 @@ public class OBJLoader {
                 group.getMaterial().setTextureVaoId(loader.loadTexture(group.getMaterial().getTextureFileName()));
 
                 int verticesNumber = findMaxVertexIndex(group.getFaces());
-                int[] indicesArray = new int[group.getFaces().size()*3];
+                int[] indicesArray = new int[group.getFaces().size() * 3];
                 float[] verticesArray = new float[verticesNumber * 3];
                 float[] normalsArray = new float[verticesNumber * 3];
                 float[] textureArray = new float[verticesNumber * 2];
@@ -284,11 +277,15 @@ public class OBJLoader {
                 group.setVertexCount(indicesArray.length);
 
                 List<Vector3f> vertices = model.getVertices();
+                int verticesArrayIterator = 0;
                 for (int i = 0; i < verticesNumber; i++) {
                     Vector3f vertex = vertices.get(i);
-                    verticesArray[i] = vertex.getX();
-                    verticesArray[i + 1] = vertex.getY();
-                    verticesArray[i + 2] = vertex.getZ();
+                    verticesArray[i * 3] = vertex.getX();
+                    verticesArrayIterator++;
+                    verticesArray[i * 3 + 1] = vertex.getY();
+                    verticesArrayIterator++;
+                    verticesArray[i * 3 + 2] = vertex.getZ();
+                    verticesArrayIterator++;
                 }
 
                 int indicesArrayIterator = 0;
