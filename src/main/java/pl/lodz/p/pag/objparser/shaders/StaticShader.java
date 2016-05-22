@@ -13,6 +13,7 @@ public class StaticShader extends ShaderProgram {
     private static final String VERTEX_FILE = "src/main/java/pl/lodz/p/pag/objparser/shaders/vertexShader.glsl";
     private static final String FRAGMENT_FILE = "src/main/java/pl/lodz/p/pag/objparser/shaders/fragmentShader.glsl";
 
+    private int location_isSelected;
     private int location_transformationMatrix;
     private int location_projectionMatrix;
     private int location_viewMatrix;
@@ -37,6 +38,7 @@ public class StaticShader extends ShaderProgram {
         location_viewMatrix = super.getUniformLocation("viewMatrix");
         location_lightPosition = super.getUniformLocation("lightPosition");
         location_lightColour = super.getUniformLocation("lightColour");
+        location_isSelected = super.getUniformLocation("isSelected");
     }
 
     public void loadTransformationMatrix(Matrix4f matrix4f) {
@@ -45,6 +47,15 @@ public class StaticShader extends ShaderProgram {
 
     public void loadProjectionMatrix(Matrix4f matrix4f) {
         super.loadMatrix(location_projectionMatrix, matrix4f);
+    }
+
+    public void loadIsSelected(boolean value){
+        float isSelected;
+        if(value)
+            isSelected = 2.5f;
+        else
+            isSelected = 0.5f;
+        super.loadFloat(location_isSelected, isSelected);
     }
 
     public void loadViewMatrix(Camera camera) {

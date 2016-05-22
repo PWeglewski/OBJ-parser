@@ -59,6 +59,8 @@ public class Renderer {
         Matrix4f parentTransformationMatrix;
         Matrix4f resultMatrix4f = new Matrix4f();
 
+        staticShader.loadIsSelected(entity.isSelected());
+
         Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(), entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
         if (entity.getParent() != null) {
             parentTransformationMatrix = entity.getParent().getTransformationMatrix();

@@ -9,6 +9,7 @@ import pl.lodz.p.pag.objparser.models.Model;
  */
 public class Entity {
     Matrix4f transformationMatrix;
+    boolean isSelected;
     private Entity parent;
     private Model model;
     private Vector3f position;
@@ -22,6 +23,7 @@ public class Entity {
         this.rotY = rotY;
         this.rotZ = rotZ;
         this.scale = scale;
+        isSelected = false;
     }
 
     public Matrix4f getTransformationMatrix() {
@@ -30,6 +32,14 @@ public class Entity {
 
     public void setTransformationMatrix(Matrix4f transformationMatrix) {
         this.transformationMatrix = transformationMatrix;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     public Entity getParent() {
