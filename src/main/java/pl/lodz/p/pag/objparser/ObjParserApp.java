@@ -11,6 +11,7 @@ import pl.lodz.p.pag.objparser.renderengine.OBJLoader;
 import pl.lodz.p.pag.objparser.renderengine.Renderer;
 import pl.lodz.p.pag.objparser.scene.Scene;
 import pl.lodz.p.pag.objparser.shaders.StaticShader;
+import pl.lodz.p.pag.objparser.toolbox.MousePicker;
 
 /**
  * Created by piotr on 16.04.2016.
@@ -27,14 +28,16 @@ public class ObjParserApp {
         Loader loader = new Loader();
         objLoader.loadObj(objParser, loader);
 
-        StaticShader staticShader = new StaticShader();
-        Renderer renderer = new Renderer(staticShader);
-
         Scene scene = new Scene(objParser);
 
-        Camera camera = new Camera();
-
         HierarchyControl hierarchyControl = new HierarchyControl(scene);
+
+        MousePicker mousePicker = new MousePicker(hierarchyControl);
+
+        StaticShader staticShader = new StaticShader();
+        Renderer renderer = new Renderer(staticShader, mousePicker);
+
+        Camera camera = new Camera();
 
         while (!Display.isCloseRequested()) {
             hierarchyControl.update();

@@ -8,6 +8,7 @@ import pl.lodz.p.pag.objparser.models.Group;
 import pl.lodz.p.pag.objparser.scene.Scene;
 import pl.lodz.p.pag.objparser.shaders.StaticShader;
 import pl.lodz.p.pag.objparser.toolbox.Maths;
+import pl.lodz.p.pag.objparser.toolbox.MousePicker;
 
 /**
  * Created by piotr on 16.04.2016.
@@ -17,14 +18,15 @@ public class Renderer {
     private static final float FOV = 70;
     private static final float NEAR_PLANE = 0.1f;
     private static final float FAR_PLANE = 1000;
-
+    private MousePicker mousePicker;
     private Matrix4f projectionMatrix;
 
-    public Renderer(StaticShader staticShader) {
+    public Renderer(StaticShader staticShader, MousePicker mousePicker) {
         createProjectionMatrix();
         staticShader.start();
         staticShader.loadProjectionMatrix(projectionMatrix);
         staticShader.stop();
+        this.mousePicker = mousePicker;
     }
 
     public Matrix4f getProjectionMatrix() {
@@ -44,12 +46,26 @@ public class Renderer {
     public void render(Scene scene, StaticShader staticShader) {
         for (Entity entity : scene.getEntities()) {
             for (Group group : entity.getModel().getGroups()) {
-                render(entity, group, staticShader);
+                render(entity, group, staticShader, scene.getEntities().indexOf(entity), true);
+            }
+        }
+        GL11.glFlush();
+        GL11.glFinish();
+
+        GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
+
+        mousePicker.update();
+
+        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+
+        for (Entity entity : scene.getEntities()) {
+            for (Group group : entity.getModel().getGroups()) {
+                render(entity, group, staticShader, scene.getEntities().indexOf(entity), false);
             }
         }
     }
 
-    public void render(Entity entity, Group group, StaticShader staticShader) {
+    public void render(Entity entity, Group group, StaticShader staticShader, int entityId, boolean renderPickColor) {
 
         GL30.glBindVertexArray(group.getVaoId());
         GL20.glEnableVertexAttribArray(0);
@@ -60,6 +76,10 @@ public class Renderer {
         Matrix4f resultMatrix4f = new Matrix4f();
 
         staticShader.loadIsSelected(entity.isSelected());
+
+        staticShader.loadPickingColor(entityId);
+
+        staticShader.loadRenderPickColor(renderPickColor);
 
         Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(), entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
         if (entity.getParent() != null) {

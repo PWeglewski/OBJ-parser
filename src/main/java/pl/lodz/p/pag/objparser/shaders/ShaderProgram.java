@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -20,6 +21,7 @@ public abstract class ShaderProgram {
     private int programId;
     private int vertexShaderId;
     private int fragmentShaderId;
+    private int colorPickFragmentShaderId;
 
     public ShaderProgram(String vertexShader, String fragmentShader) {
         this.vertexShaderId = loadShader(vertexShader, GL20.GL_VERTEX_SHADER);
@@ -27,6 +29,7 @@ public abstract class ShaderProgram {
         this.programId = GL20.glCreateProgram();
         GL20.glAttachShader(this.programId, this.vertexShaderId);
         GL20.glAttachShader(this.programId, this.fragmentShaderId);
+        GL20.glAttachShader(this.programId, this.colorPickFragmentShaderId);
         bindAttributes();
         GL20.glLinkProgram(this.programId);
         GL20.glValidateProgram(programId);
@@ -98,6 +101,10 @@ public abstract class ShaderProgram {
 
     protected void loadVector(int location, Vector3f vector) {
         GL20.glUniform3f(location, vector.x, vector.y, vector.z);
+    }
+
+    protected void loadVector4f(int location, Vector4f vector) {
+        GL20.glUniform4f(location, vector.getX(), vector.getY(), vector.getZ(), vector.getW());
     }
 
     protected void loadBoolean(int location, boolean value) {

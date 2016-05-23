@@ -45,16 +45,16 @@ public class HierarchyControl {
             selection.setScale(selection.getScale() / 1.02f);
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_T)) {
-            selection.increasePosition(0,0,0.1f);
+            selection.increasePosition(0, 0, 0.1f);
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_G)) {
-            selection.increasePosition(0,0,-0.1f);
+            selection.increasePosition(0, 0, -0.1f);
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_F)) {
-            selection.increasePosition(-0.1f,0,0);
+            selection.increasePosition(-0.1f, 0, 0);
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_H)) {
-            selection.increasePosition(0.1f,0,0);
+            selection.increasePosition(0.1f, 0, 0);
         }
         while (Keyboard.next()) {
             if (Keyboard.getEventKeyState()) {
@@ -91,6 +91,15 @@ public class HierarchyControl {
         selection.setSelected(true);
         String name = selection.getModel().getMaterialLibrary().getFile().getName().replace(".mtl", "");
         System.out.println("Current selection:\t" + name);
+    }
+
+    public void updateSelection(int index) {
+        if (index < 0 || index > scene.getEntities().size()) return;
+        if (scene.getEntities().get(index) != null) {
+            deselect();
+            selectionIndex = index;
+            updateSelection();
+        }
     }
 
     private void deselect() {
